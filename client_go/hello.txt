@@ -1,0 +1,4 @@
+This is a simple text to send
+and Read.
+I don't have idea, how use ioutil, and bufio,
+but is so interesting how create I/O package tracer
