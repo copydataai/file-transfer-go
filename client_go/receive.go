@@ -5,10 +5,13 @@ type ReceiveCMD struct {
 }
 
 func (r *ReceiveCMD) ReceiveAction() error {
-	client := ConnectTCPServer()
-	ok, err := RecvFile(client, r.channel)
-	if !ok && err != nil {
+	client, err := ConnectTCPServer()
+	if err != nil {
 		return err
+	}
+	ok, err1 := RecvFile(client, r.channel)
+	if !ok && err1 != nil {
+		return err1
 	}
 	return nil
 }

@@ -10,6 +10,7 @@ import (
 	"strings"
 )
 
+// A handle Conn from get or put and channel
 func HandleConn(client net.Conn) {
 	i := 0
 	scan := bufio.NewScanner(client)
@@ -19,6 +20,7 @@ func HandleConn(client net.Conn) {
 	for scan.Scan() {
 		line := scan.Text()
 		// Type Send o Receive
+		// And Channel
 		if i == 0 {
 			fields := strings.Fields(line)
 			channel, _ = strconv.Atoi(fields[1])
@@ -30,15 +32,24 @@ func HandleConn(client net.Conn) {
 		}
 
 		if line == "" {
+			// Wait Forever
 			break
 		}
-		if i != 0 && i > 2 {
+		if i != 0 {
 			content.Write(scan.Bytes())
-			content.Write([]byte("\n"))
+			if i < 3 {
+				// Just for separe filename & filesize
+				// and content is continuos
+				// to don't alterate the file
+				// Make this 01010101\n01010101
+				content.Write([]byte("\n"))
+			}
 		}
 		i++
 	}
 	if isPUT {
+		// I leave this by don't think other reference(and search)
+		// look how JS
 		switch channel {
 		case 0:
 			Channel0.sendFiles <- content

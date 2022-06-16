@@ -43,8 +43,10 @@ func RecvFile(conn net.Conn, channel int) (bool, error) {
 		}
 		i++
 	}
+	fmt.Println("FileSize: ", fileSize)
+	fmt.Println("filename:", filename)
 	// TODO verify filesize == content
-	fmt.Println(fileSize, content.Len())
+	fmt.Println("Compare", fileSize, content.Len())
 	if fileSize == content.Len() {
 		// Verify receive all content
 		err := ioutil.WriteFile(filename, content.Bytes(), 0644)

@@ -39,6 +39,7 @@ func SendFile(conn net.Conn, content bytes.Buffer, channel int) {
 }
 
 // Manager from channels
+// send receive to IncomingDevices
 func Broadcast(channel *Channel) {
 	// Use Map for no to take other process to delete in a Slice
 	clients := make(map[net.Conn]int)
